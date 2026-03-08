@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   BarChart3,
@@ -11,6 +10,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { useSidebarState } from "./AppLayout";
 
 const navItems = [
   { label: "Overview", icon: BarChart3, path: "/" },
@@ -22,7 +22,7 @@ const navItems = [
 ];
 
 const AppSidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const { collapsed, setCollapsed } = useSidebarState();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -57,11 +57,10 @@ const AppSidebar = () => {
                   ? "bg-sidebar-accent text-sidebar-accent-foreground"
                   : "text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50"
               }`}
+              title={collapsed ? item.label : undefined}
             >
               <item.icon
-                className={`w-4 h-4 flex-shrink-0 ${
-                  isActive ? "text-primary" : ""
-                }`}
+                className={`w-4 h-4 flex-shrink-0 ${isActive ? "text-primary" : ""}`}
               />
               {!collapsed && <span>{item.label}</span>}
             </button>
